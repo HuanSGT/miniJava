@@ -81,21 +81,3 @@ invoke id apply = Interp h
                    Just a  -> interp (closure . apply $ a) es0 cs
                    Nothing -> case h es cs of
                                    Left (a,es,cs) -> Left (a,env:es,cs)
-{--
-vali :: Ident -> Interp Int
-vali k = Interp h
-    where h es0@(env@(Env (e,f)):es) cs =
-              case Map.lookup k e of
-                   Just a  -> Left (a, es0, cs)
-                   Nothing -> case h es cs of
-                                   Left (a,es,cs) -> Left (a,env:es,cs)
-
---}
-{--
-valf :: Ident -> Interp Func
-valf a = Interp (\es cs -> Left (h a es, es, cs) )
-    where h a (Env (e,f):es) =
-              case Map.lookup a f of
-                   Just a  -> a
-                   Nothing -> h a es
---}

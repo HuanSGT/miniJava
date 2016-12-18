@@ -174,24 +174,3 @@ func aa b =
              where h = return $ func Nothing b
          Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
              where h = return $ func (Just p) b
-{--
-invoke :: Ident -> Maybe Exprs -> Interp Int
-invoke id ea = valf id >>= closure . apply ea . return
-
-apply :: Maybe Exprs -> Interp Func -> Interp Int
-apply Nothing f = f >>= funci
-apply (Just (SingleExpr e)) f = do
-    e' <- expr e
-    f' <- f
-    apply Nothing (funcf f' e')
-apply (Just (Exprs e _ es)) f = do
-    e' <- expr e
-    f' <- f
-    apply (Just es) (funcf f' e')
---}
---if c' == 0
---then return 0
---else statement e >> statement w
-    {--if c' == 0
-       then return 0
-       else statement e >> statement w--}

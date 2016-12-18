@@ -1,7 +1,7 @@
 rm -f result.txt
 touch result.txt
 
-#cp ../../miniJava-interpreter/testcase/result.txt result2.txt
+cp ../../miniJava-interpreter/testcase/result.txt result2.txt
 
 ../bin/mac/miniJavac parser/BinaryTree.java >> result.txt
 ../bin/mac/miniJavac parser/Factorial.java >> result.txt
