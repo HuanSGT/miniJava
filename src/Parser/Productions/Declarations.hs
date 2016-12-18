@@ -69,4 +69,4 @@ para :: Parser Para
 para = do
     a <- ktype
     b <- ident
-    return (Para a b)
+    return $ Para a b

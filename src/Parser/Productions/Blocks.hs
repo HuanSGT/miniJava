@@ -13,38 +13,33 @@ import Parser.Tokens.Operators
 import Parser.Productions.Expressions
 
 block :: Parser Block
-block = (do
+block = do
     a <- lCurly
     b <- asterisk (two (varDecl) (statement))
     c <- rCurly
-    return $ Block a b c)
-    <?> "Block"
+    return $ Block a b c
 
 varDecl :: Parser VarDecl
-varDecl = (do
-    a <- Parser (g . parse h)
+varDecl = do
+    a <- VarDecl'
     b <- ask (varClause)
     c <- colon
     return $ VarDecl a b c)
-    <?> "VarDecl"
-    where g x = case x of
-                     Left  (Left m) -> Left (Left m)
-                     Right (Left m) -> Left (Left m)
-                     other          -> other
-          h = do
-              a <- ktype
-              b <- ident
-              return $ VarDecl' a b
+
+varDecl' :: Parser VarDecl'
+varDecl' = do
+    a <- ktype
+    b <- ident
+    return $ VarDecl' a b
 
 varClause :: Parser VarClause
 varClause = do
     a <- assignOp
     b <- expr
     return (VarClause a b)
-    <?> "VarClause"
 
 statement :: Parser Statement
-statement = aExpr +++ aReturn +++ aPrint +++ aIf +++ aWhile +++ aColon +++ aBlock <?> "Statement"
+statement = aExpr +++ aReturn +++ aPrint +++ aIf +++ aWhile +++ aColon +++ aBlock
     where aBlock = (block) >>= return . ABlock
           aColon = (colon) >>= return . AColon
           aExpr = do
@@ -92,8 +87,7 @@ aIf = do
     return $ AIf a b c d e f
 
 elseClause :: Parser ElseClause
-elseClause = (do
+elseClause = do
     a <- kelse
     b <- statement
-    return (ElseClause a b) )
-    <?> "ElseClause"
+    return $ ElseClause a b
