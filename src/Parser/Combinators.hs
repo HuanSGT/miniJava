@@ -12,11 +12,9 @@ import Parser.Parser
 import qualified Data.Char as Char
 
 item :: Parser Char
-item = Parser (
-    case cs of
-         "" -> []
-         c:cs -> [(c,cs)] )
-
+item = Parser f
+    where f [] = []
+          f (c:cs) = [(c,cs)]
 
 sat :: (Char -> Bool) -> Parser Char
 sat p = do { c <- item; if p c then c else zero }

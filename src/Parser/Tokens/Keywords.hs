@@ -34,33 +34,24 @@ reserved = Set.fromList ["return","if","while","new","System","this","int","bool
 
 ident :: Parser Ident
 ident = do
-    c <- char '_'
-ident = Parser (g . parse h) <?> "Ident"
-    where g x = case x of
-                     Left  (Left m) -> Left (Left m)
-                     Right (Left m) -> Left (Left m)
-                     other          -> other
-          h = do
-              c <- char '_' +++ sat Char.isAlpha
-              cs <- asterisk $ char '_' +++ sat Char.isAlphaNum
-              if Set.member (c:cs) reserved
-                 then return_ . Ident $ (c:cs)
-                 else token . return  . Ident $ (c:cs)
+    c  <- char '_' +++ sat Char.isAlpha
+    cs <- asterisk $ char '_' +++ sat Char.isAlphaNum
+    return . Ident $ c:cs
 
 int  :: Parser BasicExpr
 bool :: Parser BasicExpr
 nul  :: Parser BasicExpr
 this :: Parser BasicExpr
 
-int = token $ plusSign (sat Char.isDigit) >>= return . Int . read <?> "int"
+int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
 
 bool = token (true +++ false)
-    where true  = string "true"  >> return (Bool True) <?> "true"
-          false = string "false" >> return (Bool False) <?> "false"
+    where true  = string "true"  >> return (Bool True)
+          false = string "false" >> return (Bool False)
 
-nul = token (string "null" >> return Nul) <?> "null"
+nul = token (string "null" >> return Nul)
 
-this = token (string "this" >> return This) <?> "this"
+this = token (string "this" >> return This)
 
 
 kclass   :: Parser Class
@@ -78,37 +69,36 @@ knew     :: Parser New
 kmain    :: Parser KMain
 kvoid    :: Parser Void
 
-kclass   = token $ string "class"   >> return Class <?> "class"
-kextends = token $ string "extends" >> return Extends <?> "extends"
-kpublic  = token $ string "public"  >> return Public <?> "public"
-kstatic  = token $ string "static"  >> return Static <?> "static"
-kwhile   = token $ string "while"   >> return While <?> "while"
-kif      = token $ string "if"      >> return If <?> "if"
-kelse    = token $ string "else"    >> return Else <?> "else"
-ksystem  = token $ string "System"  >> return System <?> "System"
-kout     = token $ string "out"     >> return Out <?> "out"
-kprintln = token $ string "println" >> return Println <?> "println"
-kreturn  = token $ string "return"  >> return Return <?> "return"
-knew     = token $ string "new"     >> return New <?> "new"
-kmain    = token $ string "main"    >> return KMain <?> "main"
-kstring  = token $ string "String"  >> return KString <?> "String"
-kvoid    = token $ string "void"    >> return Void <?> "void"
+kclass   = token $ string "class"   >> return Class
+kextends = token $ string "extends" >> return Extends
+kpublic  = token $ string "public"  >> return Public
+kstatic  = token $ string "static"  >> return Static
+kwhile   = token $ string "while"   >> return While
+kif      = token $ string "if"      >> return If
+kelse    = token $ string "else"    >> return Else
+ksystem  = token $ string "System"  >> return System
+kout     = token $ string "out"     >> return Out
+kprintln = token $ string "println" >> return Println
+kreturn  = token $ string "return"  >> return Return
+knew     = token $ string "new"     >> return New
+kmain    = token $ string "main"    >> return KMain
+kstring  = token $ string "String"  >> return KString
+kvoid    = token $ string "void"    >> return Void
 
 ktype :: Parser Type
-ktype = intType +++ boolType +++ voidType +++ classType <?> "Type"
+ktype = intType +++ boolType +++ voidType +++ classType
 
 intType   :: Parser Type
 boolType  :: Parser Type
 voidType  :: Parser Type
 classType :: Parser Type
 
-intType   = token $ string "int" >> return IntType <?> "int"
-boolType  = token $ string "boolean" >> return BoolType <?> "boolean"
-voidType  = token $ string "void" >> return VoidType <?> "void"
+intType   = token $ string "int" >> return IntType
+boolType  = token $ string "boolean" >> return BoolType
+voidType  = token $ string "void" >> return VoidType
 classType = token $ ident  >>= return . ClassType
 
 eof :: Parser EOF
-eof = Parser (\st@(pos,cs) ->
-    case cs of
-         c:cs -> Left (Left (pos,[c],["EOF"]))
-         []   -> Left (Right (EOF,st,(pos,[],[])) ) )
+eof = Parser f
+    where f [] = [(EOF,[])]
+          f _  = []
