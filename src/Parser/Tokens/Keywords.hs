@@ -36,7 +36,9 @@ ident :: Parser Ident
 ident = do
     c  <- char '_' +++ sat Char.isAlpha
     cs <- asterisk $ char '_' +++ sat Char.isAlphaNum
-    token . return . Ident $ c:cs
+    if Set.member (c:cs) reserved
+       then zero
+       else token . return . Ident $ c:cs
 
 int  :: Parser BasicExpr
 bool :: Parser BasicExpr
