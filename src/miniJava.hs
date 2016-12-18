@@ -8,7 +8,7 @@ import Interp.Execution (execute)
 
 run :: String -> String
 run code = case apply program code of
-                (a,cs) : _ -> execute a ++ "\n" ++ cs
+                (a,cs) : _ -> execute a -- ++ "\n" ++ cs
                 _ -> "parse error"
 
 main :: IO ()

@@ -18,7 +18,10 @@ instance Monad Parser where
     p >>= f = Parser ( \cs -> do { (a,cs') <- parse p cs; parse (f a) cs' } )
 
 (+++) :: Parser a -> Parser a -> Parser a
-p +++ q = Parser (\cs -> parse p cs ++ parse q cs)
+p +++ q = Parser (\cs -> case parse p cs ++ parse q cs of
+                 [] -> []
+                 x:xs -> [x]
+                 )
 
 zero :: Parser a
 zero = Parser ( \cs -> [] )
