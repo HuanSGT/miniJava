@@ -7,7 +7,7 @@ infixl 3 +++
 newtype Parser a = Parser { parse :: String -> [(a,String)] }
 
 instance Functor Parser where
-    fmap f p = Parser ( \cs -> fmap (\(a,cs') -> (f a,cs')) (parse p st) )
+    fmap f p = Parser ( \cs -> fmap (\(a,cs') -> (f a,cs')) (parse p cs) )
 
 instance Applicative Parser where
     pure f = Parser ( \cs -> [(f,cs)] )
@@ -18,7 +18,7 @@ instance Monad Parser where
     p >>= f = Parser ( \cs -> do { (a,cs') <- parse p cs; parse (f a) cs' } )
 
 (+++) :: Parser a -> Parser a -> Parser a
-p +++ q = parse p cs ++ parse q cs
+p +++ q = Parser (\cs -> parse p cs ++ parse q cs)
 
 zero :: Parser a
 zero = Parser ( \cs -> [] )

@@ -2,12 +2,13 @@ import Data.List (isSuffixOf, intersperse)
 import System.Environment (getArgs)
 import System.Directory (doesFileExist)
 import System.IO (readFile)
-import Parser.Analysis
+import Parser.Combinators (apply)
+import Parser.Productions.Program  (program)
 
-compile :: String -> String -> String
-compile f a = case analyse a of
-                 Left cs -> f ++ cs
-                 Right x -> show x ++ "\n"
+compile :: String -> String
+compile code = case apply program code of
+                    (a,cs) : _ -> show a ++ "\n" ++ cs
+                    _ -> "parse error"
 
 main :: IO ()
 main = do
@@ -20,4 +21,4 @@ main = do
                 then putStrLn $ "miniJava: " ++ a ++ ": no such file"
                 else if not $ isSuffixOf ".java" a
                         then putStrLn "miniJava: filetype unsupported"
-                        else readFile a >>= putStr . compile a
+                        else readFile a >>= putStr . compile

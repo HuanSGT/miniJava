@@ -17,7 +17,7 @@ item = Parser f
           f (c:cs) = [(c,cs)]
 
 sat :: (Char -> Bool) -> Parser Char
-sat p = do { c <- item; if p c then c else zero }
+sat p = do { c <- item; if p c then return c else zero }
 
 sat' :: (Char -> Bool) -> Parser String
 sat' p = do { x <- sat p; return [x] }

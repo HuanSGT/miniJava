@@ -21,10 +21,10 @@ block = do
 
 varDecl :: Parser VarDecl
 varDecl = do
-    a <- VarDecl'
+    a <- varDecl'
     b <- ask (varClause)
     c <- colon
-    return $ VarDecl a b c)
+    return $ VarDecl a b c
 
 varDecl' :: Parser VarDecl'
 varDecl' = do

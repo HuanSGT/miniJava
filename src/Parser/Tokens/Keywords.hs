@@ -36,7 +36,7 @@ ident :: Parser Ident
 ident = do
     c  <- char '_' +++ sat Char.isAlpha
     cs <- asterisk $ char '_' +++ sat Char.isAlphaNum
-    return . Ident $ c:cs
+    token . return . Ident $ c:cs
 
 int  :: Parser BasicExpr
 bool :: Parser BasicExpr
@@ -100,5 +100,5 @@ classType = token $ ident  >>= return . ClassType
 
 eof :: Parser EOF
 eof = Parser f
-    where f [] = [(EOF,[])]
+    where f "" = [(EOF,[])]
           f _  = []

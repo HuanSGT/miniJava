@@ -16,7 +16,7 @@ classDecl :: Parser ClassDecl
 classDecl = do
     a <- kclass
     b <- ident
-    c <- ask (extending)
+    c <- ask extending
     d <- lCurly
     e <- asterisk (member)
     f <- rCurly
