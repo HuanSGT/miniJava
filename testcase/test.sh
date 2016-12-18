@@ -20,3 +20,5 @@ touch result.txt
 ../bin/mac/miniJava interpreter/Fibonacci.java >> result.txt
 ../bin/mac/miniJava interpreter/GCD.java >> result.txt
 ../bin/mac/miniJava interpreter/Prime.java >> result.txt
+
+icdiff result.txt result2.txt
