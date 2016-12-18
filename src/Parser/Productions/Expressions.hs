@@ -19,20 +19,19 @@ relExpr   :: Parser RelExpr
 addExpr   :: Parser AddExpr
 mulExpr   :: Parser MulExpr
 
-expr    = rass orExpr    assignOp AOr    Expr <?> "Expr"
-orExpr  = lass andExpr   orOp     AAnd   OrExpr <?> "OrExpr"
-andExpr = lass eqExpr    andOp    AEq    AndExpr <?> "AndExpr"
-eqExpr  = lass relExpr   eqOp     ARel   EqExpr <?>  "EqExpr"
-relExpr = lass addExpr   relOp    AAdd   RelExpr <?> "RelExpr"
-addExpr = lass mulExpr   addOp    AMul   AddExpr <?> "AddExpr"
-mulExpr = lass unaryExpr mulOp    AUnary MulExpr <?> "MulExpr"
+expr    = rass orExpr    assignOp AOr    Expr
+orExpr  = lass andExpr   orOp     AAnd   OrExpr
+andExpr = lass eqExpr    andOp    AEq    AndExpr
+eqExpr  = lass relExpr   eqOp     ARel   EqExpr
+relExpr = lass addExpr   relOp    AAdd   RelExpr
+addExpr = lass mulExpr   addOp    AMul   AddExpr
+mulExpr = lass unaryExpr mulOp    AUnary MulExpr
 
 unaryExpr :: Parser UnaryExpr
 unaryExpr = ( do
             a <- unaryOp
             b <- unaryExpr
             return $ UnaryExpr a b ) +++ (primaryExpr >>= return . APrimary)
-            <?> "UnaryExpr"
 
 eqOp :: Parser EqOp
 relOp :: Parser RelOp
@@ -47,43 +46,41 @@ mulOp = times +++ slash +++ modulo
 unaryOp = no +++ nega
 
 primaryExpr :: Parser PrimaryExpr
-primaryExpr = lass call dot ACall Calls <?> "PrimaryExpr"
+primaryExpr = lass call dot ACall Calls
 
 call :: Parser Call
-call = (do
+call = do
     a <- basicExpr
     b <- ask calling
-    return $ Call a b )
-    <?> "Call"
+    return $ Call a b
 
 calling :: Parser Calling
-calling = (do
+calling = do
     a <- lBracket
     b <- ask exprs
     c <- rBracket
-    return $ Calling a b c )
-    <?> "Calling"
+    return $ Calling a b c
 
 basicExpr :: Parser BasicExpr
-basicExpr = ref +++ bool +++ int +++ nul +++ this +++ newExpr +++ expression <?> "BasicExpr"
+basicExpr = ref +++ bool +++ int +++ nul +++ this +++ newExpr +++ expression
 
 newExpr :: Parser BasicExpr
-newExpr = (do
+newExpr = do
     a <- knew
     b <- ident
     c <- lBracket
     d <- rBracket
-    return $ NewExpr a b c d)
+    return $ NewExpr a b c d
 
 expression :: Parser BasicExpr
-expression = (do
+expression = do
     a <- lBracket
     b <- expr
     c <- rBracket
-    return $ Expression a b c)
+    return $ Expression a b c
 
 exprs :: Parser Exprs
-exprs = rass expr comma SingleExpr Exprs <?> "Exprs"
+exprs = rass expr comma SingleExpr Exprs
 
 ref :: Parser BasicExpr
 ref = ident >>= return . Ref
