@@ -89,10 +89,10 @@ primaryExpr (ACall (Call a Nothing)) = basicExpr a
 
 primaryExpr (ACall (Call (Ref a) (Just (Calling b ca d)))) =
     case ca of
-         Nothing -> invoke a (apply $ [])
+         Nothing -> invoke [] a --apply $ [])
          Just e  -> do
              xs <- exprs e
-             invoke a (apply xs)
+             invoke xs a --(apply xs)
     
 exprs :: Exprs -> Interp [Int]
 exprs (SingleExpr e) = expr e >>= return . (:[])
@@ -101,12 +101,14 @@ exprs (Exprs e _ es) = do
     xs <- exprs es
     return $ x:xs
 
+{--
 apply :: [Int] -> Func -> Interp Int
 apply xs f =  h (return f) xs
     where h f [] = f >>= funci
           h f (x:xs) = do
               f' <- f
               h (funcf f' x) xs
+              --}
 
 basicExpr :: BasicExpr -> Interp Int
 basicExpr e = case e of
@@ -153,7 +155,7 @@ block (Block a bs c) = ss bs
 
 eval :: Program -> Interp Int
 eval (Program [ClassDecl a b c d es f] EOF) = closure h
-    where h = methods es >> invoke (Ident "main") (apply $ [])
+    where h = methods es >> invoke [] (Ident "main") --(apply $ [])
               where methods [] = return 0
                     methods (Member a (Just b) c
                             (Right (MemberClause d (Left e))):xs) =

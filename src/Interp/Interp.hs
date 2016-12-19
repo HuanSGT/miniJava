@@ -25,9 +25,6 @@ instance Monad Interp where
                                        Right (a,es,cs) -> Right  (a,es,cs)
                      )
 
---data Var = Vari { vari :: Int }
- --        | Varf { varf :: Func }
-
 data Func = Funci { funci :: Interp Int }
           | Funcf { funcf :: Int -> Interp Func }
 
@@ -66,6 +63,14 @@ vali a = Interp (\es cs -> Left (h a es, es, cs) )
                    Nothing -> h a es
           h (Ident a) _ = error a
 
+valf :: Ident -> Interp Func
+valf a = Interp (\es cs -> Left (h a es, es, cs) )
+    where h a (Env (e,f):es) =
+              case Map.lookup a f of
+                   Just a  -> a
+                   Nothing -> h a es
+          h (Ident a) _ = error a
+
 updi :: Ident -> Int -> Interp Int
 updi k v = Interp h
     where h es0@(env@(Env (e,f)):es) cs =
@@ -74,10 +79,24 @@ updi k v = Interp h
                    Nothing -> case h es cs of
                                    Left (a,es,cs) -> Left (a,env:es,cs)
 
-invoke :: Ident -> (Func -> Interp Int) -> Interp Int
+--invoke :: Ident -> (Interp Func -> Interp Int) -> Interp Int
+--invoke id apply' = closure . apply' . valf $ id
+
+invoke :: [Int] -> Ident -> Interp Int
+invoke xs id = closure . apply xs . valf $ id
+
+apply :: [Int] -> Interp Func -> Interp Int
+apply xs f =  h f xs
+    where h f [] = f >>= funci
+          h f (x:xs) = do
+              f' <- f
+              h (funcf f' x) xs
+
+{--
 invoke id apply = Interp h
     where h es0@(env@(Env (e,f)):es) cs =
               case Map.lookup id f of
                    Just a  -> interp (closure . apply $ a) es0 cs
                    Nothing -> case h es cs of
                                    Left (a,es,cs) -> Left (a,env:es,cs)
+                                   --}
