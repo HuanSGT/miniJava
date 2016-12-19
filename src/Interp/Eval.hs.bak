@@ -112,7 +112,7 @@ basicExpr e = case e of
 statement :: Statement -> Interp Int
 statement (AColon a) = return 0
 statement (AExpr a b) = expr a
-statement (ABlock a) = block a
+statement (ABlock a) = closure_ (block a)
 
 statement w@(AWhile a b c d e) = do
     c' <- expr c
@@ -145,8 +145,8 @@ block (Block a bs c) = ss bs
           ss (Right x:xs)  = statement x >> ss xs
 
 eval :: Program -> Interp Int
-eval (Program [ClassDecl a b c d es f] EOF) = h
-    where h = pushe >> methods es >> pushe >> invoke [] (Ident "main")
+eval (Program [ClassDecl a b c d es f] EOF) = closure h
+    where h = methods es >> invoke [] (Ident "main")
               where methods [] = return 0
                     methods (Member a (Just b) c
                             (Right (MemberClause d (Left e))):xs) =

@@ -21,7 +21,9 @@
 \usepackage{dsfont}
 \usepackage{xeCJK}
 \usepackage{minted}
+%\usemintedstyle{fruity}
 \usepackage[backend=biber]{biblatex}
+%\usecolortheme{albatross}
 
 \setbeamertemplate{footline}{}
 \setbeamertemplate{headline}{}
@@ -321,6 +323,7 @@ invoke xs id = closure . apply xs . valf $ id
 \end{minted}
 \end{frame}
 
+\iffalse
 \begin{frame}[fragile=singleslide]{Interpreting Functions}
 \begin{minted}[fontsize=\codesize]{haskell}
 func :: Maybe Paras -> Block -> Func
@@ -338,6 +341,7 @@ eval (Program [ClassDecl a b c d es f] EOF) = closure h
               where methods ...
 \end{minted}
 \end{frame}
+\fi
 
 \end{spacing}
 \end{document}
