@@ -160,7 +160,26 @@ rass a op single cons = a >>= rest
                    r <- rest z
                    return $ (cons x y r) ) +++ return (single x)
 \end{minted}
-%\hspace{-5pt}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Operators and Ints}
+\begin{minted}[fontsize=\codesize]{haskell}
+data AddOp    = Plus | Minus
+
+plus     = token $ string "+"  >> return Plus
+minus    = token $ string "-"  >> return Minus
+
+data MulOp    = Times | Slash | Modulo
+
+times    = token $ string "*"  >> return Times
+slash    = token $ string "/"  >> return Slash
+modulo   = token $ string "%"  >> return Modulo
+
+int  :: Parser BasicExpr
+
+int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
+
+\end{minted}
 \end{frame}
 
 \end{spacing}

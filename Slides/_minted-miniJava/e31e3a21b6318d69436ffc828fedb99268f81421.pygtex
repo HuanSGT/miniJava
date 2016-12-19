@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{AddOp}    \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Plus} \PYGdefault{o}{|} \PYGdefault{k+kt}{Minus}
+
+\PYGdefault{n+nf}{plus}     \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}+\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Plus}
+\PYGdefault{n+nf}{minus}    \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZhy{}\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Minus}
+
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{MulOp}    \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Times} \PYGdefault{o}{|} \PYGdefault{k+kt}{Slash} \PYGdefault{o}{|} \PYGdefault{k+kt}{Modulo}
+
+\PYGdefault{n+nf}{times}    \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}*\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Times}
+\PYGdefault{n+nf}{slash}    \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}/\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Slash}
+\PYGdefault{n+nf}{modulo}   \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZpc{}\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Modulo}
+
+\PYGdefault{n+nf}{int}  \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Parser} \PYGdefault{k+kt}{BasicExpr}
+
+\PYGdefault{n+nf}{int} \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{plusSign} \PYGdefault{p}{(}\PYGdefault{n}{sat} \PYGdefault{k+kt}{Char}\PYGdefault{o}{.}\PYGdefault{n}{isDigit}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}=} \PYGdefault{n}{return} \PYGdefault{o}{.} \PYGdefault{k+kt}{Int} \PYGdefault{o}{.} \PYGdefault{n}{read}
+\end{Verbatim}
