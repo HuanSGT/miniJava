@@ -10,7 +10,12 @@
 \PYGdefault{n+nf}{slash}    \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}/\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Slash}
 \PYGdefault{n+nf}{modulo}   \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZpc{}\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Modulo}
 
-\PYGdefault{n+nf}{int}  \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Parser} \PYGdefault{k+kt}{BasicExpr}
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{UnaryOp}  \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{No} \PYGdefault{o}{|} \PYGdefault{k+kt}{Nega}
+
+\PYGdefault{n+nf}{no}       \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}!\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{No}
+\PYGdefault{n+nf}{nega}     \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{string} \PYGdefault{l+s}{\PYGdefaultZdq{}\PYGdefaultZhy{}\PYGdefaultZdq{}}  \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{return} \PYGdefault{k+kt}{Nega}
+
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{BasicExpr} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Bool} \PYGdefault{k+kt}{Bool} \PYGdefault{o}{|} \PYGdefault{k+kt}{Int} \PYGdefault{k+kt}{Int} \PYGdefault{o}{|} \PYGdefault{k+kt}{Nul} \PYGdefault{o}{|} \PYGdefault{o}{...}
 
 \PYGdefault{n+nf}{int} \PYGdefault{o+ow}{=} \PYGdefault{n}{token} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{plusSign} \PYGdefault{p}{(}\PYGdefault{n}{sat} \PYGdefault{k+kt}{Char}\PYGdefault{o}{.}\PYGdefault{n}{isDigit}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}=} \PYGdefault{n}{return} \PYGdefault{o}{.} \PYGdefault{k+kt}{Int} \PYGdefault{o}{.} \PYGdefault{n}{read}
 \end{Verbatim}

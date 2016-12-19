@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{AddExpr}   \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{AMul} \PYGdefault{k+kt}{MulExpr}         \PYGdefault{o}{|} \PYGdefault{k+kt}{AddExpr} \PYGdefault{k+kt}{AddExpr} \PYGdefault{k+kt}{AddOp} \PYGdefault{k+kt}{MulExpr}
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{MulExpr}   \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{AUnary} \PYGdefault{k+kt}{UnaryExpr}     \PYGdefault{o}{|} \PYGdefault{k+kt}{MulExpr} \PYGdefault{k+kt}{MulExpr} \PYGdefault{k+kt}{MulOp} \PYGdefault{k+kt}{UnaryExpr}
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{UnaryExpr} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{APrimary} \PYGdefault{k+kt}{PrimaryExpr} \PYGdefault{o}{|} \PYGdefault{k+kt}{UnaryExpr} \PYGdefault{k+kt}{UnaryOp} \PYGdefault{k+kt}{UnaryExpr}
+
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{PrimaryExpr} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{ACall} \PYGdefault{k+kt}{Call}
+                 \PYGdefault{o}{|} \PYGdefault{k+kt}{Calls} \PYGdefault{k+kt}{PrimaryExpr} \PYGdefault{k+kt}{Dot} \PYGdefault{k+kt}{Call}
+
+\PYGdefault{k+kr}{data} \PYGdefault{k+kt}{Call} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Call} \PYGdefault{k+kt}{BasicExpr} \PYGdefault{p}{(}\PYGdefault{k+kt}{Maybe} \PYGdefault{k+kt}{Calling}\PYGdefault{p}{)}
+\end{Verbatim}

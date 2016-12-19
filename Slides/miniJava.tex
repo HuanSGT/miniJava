@@ -175,10 +175,27 @@ times    = token $ string "*"  >> return Times
 slash    = token $ string "/"  >> return Slash
 modulo   = token $ string "%"  >> return Modulo
 
-int  :: Parser BasicExpr
+data UnaryOp  = No | Nega
+
+no       = token $ string "!"  >> return No
+nega     = token $ string "-"  >> return Nega
+
+data BasicExpr = Bool Bool | Int Int | Nul | ...
 
 int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
+\end{minted}
+\end{frame}
 
+\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Nodes in AST}
+\begin{minted}[fontsize=\codesize]{haskell}
+data AddExpr   = AMul MulExpr         | AddExpr AddExpr AddOp MulExpr
+data MulExpr   = AUnary UnaryExpr     | MulExpr MulExpr MulOp UnaryExpr
+data UnaryExpr = APrimary PrimaryExpr | UnaryExpr UnaryOp UnaryExpr
+
+data PrimaryExpr = ACall Call
+                 | Calls PrimaryExpr Dot Call
+
+data Call = Call BasicExpr (Maybe Calling)
 \end{minted}
 \end{frame}
 
