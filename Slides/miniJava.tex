@@ -1,0 +1,167 @@
+\def\pgfsysdriver{pgfsys-dvipdfm.def}
+\pdfpagewidth=\paperwidth
+\pdfpageheight=\paperheight
+
+\documentclass[12pt]{beamer}
+%\usetheme{Warsaw}
+
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{indentfirst}
+\usepackage[export]{adjustbox}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{setspace}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{pgfpages}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{dsfont}
+\usepackage{xeCJK}
+\usepackage{minted}
+\usepackage[backend=biber]{biblatex}
+
+%\setbeamertemplate{footline}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{navigation symbols}{}
+%\setbeameroption{show notes on second screen=right}
+\setbeamertemplate{note page}[plain]
+
+\addtobeamertemplate{frametitle}{\vspace*{-5pt}}{\vspace*{0pt}}
+
+\renewcommand*{\thefootnote}{[\arabic{footnote}]}
+
+\usefonttheme{professionalfonts}
+
+\setsansfont{Open Sans}[Scale=0.8]
+\setCJKsansfont[Scale=0.8]{WenQuanYi Micro Hei}
+
+%\setbeamerfont{title}{ size={\fontsize{16}{16}} }
+%\setbeamerfont{date}{ size={\fontsize{20}{20}} }
+%\setbeamerfont{note page}{	size={\fontsize{14}{14}} }
+%\setbeamerfont{note title}{ size = {\fontsize{12}{12}} }
+%\setbeamerfont{institute}{ size={\fontsize{7}{7}} }
+%\setbeamerfont{footnote}{ size={\fontsize{7}{7}} }
+%\setbeamerfont{footline}{ size={\fontsize{7}{7}} }
+
+\newcommand{\codesize}{\fontsize{7.7}{7.7}}
+
+
+\title{}
+
+\author{}
+
+\date{}
+
+\newcommand{\insfig}[2][1]{
+	\begin{figure}
+		\includegraphics[width=#1\textwidth]{#2.pdf}
+	\end{figure}
+}
+\newcommand{\hs}[1]{
+	\begin{minted}[fontsize=\tiny]{haskell}
+	#1
+	\end{minted}
+}
+
+\begin{document}
+
+\begin{spacing}{1.3}
+
+\begin{frame}[fragile=singleslide]{The Parser Type}
+
+\begin{minted}[fontsize=\codesize]{haskell}
+newtype Parser a = Parser { parse :: String -> [(a,String)] }
+
+instance Monad Parser where
+    return a = Parser ( \cs -> [(a,cs)] )
+    p >>= f = Parser ( \cs -> do { (a,cs') <- parse p cs; parse (f a) cs' } )
+
+(+++) :: Parser a -> Parser a -> Parser a
+p +++ q = Parser (\cs -> case parse p cs ++ parse q cs of
+                 [] -> []
+                 x:xs -> [x] )
+
+zero :: Parser a
+zero = Parser ( \cs -> [] )
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Combinators - Char and String}
+
+\begin{minted}[fontsize=\codesize]{haskell}
+item :: Parser Char
+item = Parser f
+    where f [] = []
+          f (c:cs) = [(c,cs)]
+
+sat :: (Char -> Bool) -> Parser Char
+sat p = do { c <- item; if p c then return c else zero }
+
+sat' :: (Char -> Bool) -> Parser String
+sat' p = do { x <- sat p; return [x] }
+
+char :: Char -> Parser Char
+char c = sat (c==)
+
+string :: String -> Parser String
+string "" = return ""
+string (c:cs) = char c >> string cs >> return (c:cs)
+
+next :: String -> Parser String
+next cs = string cs +++ (item >> next cs)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Combinators - Applying a Parser}
+
+\begin{minted}[fontsize=\codesize]{haskell}
+space :: Parser String
+space = sat' Char.isSpace
+
+comments :: Parser String
+comments = (string "/*" >> next "*/") +++ (string "//" >> next "\n")
+
+white :: Parser String
+white = asterisk (space +++ comments) >>= return . concat
+
+token :: Parser a -> Parser a
+token p = do { a <- p; white; return a }
+
+apply :: Parser a -> String -> [(a,String)]
+apply p = parse (white >> p)
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Combinators - Parsing Sequence}
+\begin{minted}[fontsize=\codesize]{haskell}
+asterisk :: Parser a -> Parser [a]
+asterisk p = plusSign p +++ return []
+
+plusSign :: Parser a -> Parser [a]
+plusSign p = do { x <- p; xs <- asterisk p; return (x:xs) }
+
+-- ( (a op a) op a ) op a
+lass :: Parser a -> Parser op -> (a -> b) -> (b -> op -> a -> b) -> Parser b
+lass a op single cons = a >>= rest . single
+    where rest x = ( do
+                   y <- op
+                   z <- a
+                   rest $ cons x y z ) +++ return x
+
+-- a op ( a op (a op a) )
+rass :: Parser a -> Parser op -> (a -> b) -> (a -> op -> b -> b) -> Parser b
+rass a op single cons = a >>= rest
+    where rest x = ( do
+                   y <- op
+                   z <- a
+                   r <- rest z
+                   return $ (cons x y r) ) +++ return (single x)
+\end{minted}
+%\hspace{-5pt}
+\end{frame}
+
+\end{spacing}
+\end{document}

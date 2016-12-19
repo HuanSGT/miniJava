@@ -101,12 +101,17 @@ exprs (Exprs e _ es) = do
     xs <- exprs es
     return $ x:xs
 
-apply :: [Int] -> Func -> Interp Int
+apply :: [Int] -> Interp Func -> Interp Int
+apply xs f = h f xs
+    where h f [] = f >>= funci
+          h f (x:xs) = do { f' <- f; h (funcf f' x) xs }
+{--
 apply xs f =  h (return f) xs
     where h f [] = f >>= funci
           h f (x:xs) = do
               f' <- f
               h (funcf f' x) xs
+              --}
 
 basicExpr :: BasicExpr -> Interp Int
 basicExpr e = case e of
