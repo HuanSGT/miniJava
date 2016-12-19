@@ -3,7 +3,7 @@
 \pdfpageheight=\paperheight
 
 \documentclass[12pt]{beamer}
-%\usetheme{Warsaw}
+\usetheme{Warsaw}
 
 \usepackage{color}
 \usepackage{xcolor}
@@ -23,7 +23,7 @@
 \usepackage{minted}
 \usepackage[backend=biber]{biblatex}
 
-%\setbeamertemplate{footline}{}
+\setbeamertemplate{footline}{}
 \setbeamertemplate{headline}{}
 \setbeamertemplate{navigation symbols}{}
 %\setbeameroption{show notes on second screen=right}
@@ -168,17 +168,14 @@ data AddOp    = Plus | Minus
 
 plus     = token $ string "+"  >> return Plus
 minus    = token $ string "-"  >> return Minus
+addOp    = plus +++ minus
 
 data MulOp    = Times | Slash | Modulo
 
 times    = token $ string "*"  >> return Times
 slash    = token $ string "/"  >> return Slash
 modulo   = token $ string "%"  >> return Modulo
-
-data UnaryOp  = No | Nega
-
-no       = token $ string "!"  >> return No
-nega     = token $ string "-"  >> return Nega
+mulOp    = times +++ slash +++ modulo
 
 data BasicExpr = Bool Bool | Int Int | Nul | ...
 
@@ -188,15 +185,41 @@ int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
 
 \begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Nodes in AST}
 \begin{minted}[fontsize=\codesize]{haskell}
-data AddExpr   = AMul MulExpr         | AddExpr AddExpr AddOp MulExpr
-data MulExpr   = AUnary UnaryExpr     | MulExpr MulExpr MulOp UnaryExpr
-data UnaryExpr = APrimary PrimaryExpr | UnaryExpr UnaryOp UnaryExpr
+data AddExpr   = AMul MulExpr
+               | AddExpr AddExpr AddOp MulExpr
 
-data PrimaryExpr = ACall Call
-                 | Calls PrimaryExpr Dot Call
+addExpr = lass mulExpr   addOp AMul   AddExpr
 
-data Call = Call BasicExpr (Maybe Calling)
+data MulExpr   = AUnary UnaryExpr
+               | MulExpr MulExpr MulOp UnaryExpr
+
+mulExpr = lass unaryExpr mulOp AUnary MulExpr
 \end{minted}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - An Example}
+\begin{block}{Terminal}
+\begin{minted}[fontsize=\codesize]{haskell}
+ghci> fst . head $ apply addExpr "10 / 3 - 4 * 5 % 7"
+(AddExpr
+    (MulExpr
+        (int 10)
+        (op "/")
+        (int 3)
+    )
+    (op "-")
+    (MulExpr
+        (MulExpr
+            (int 4)
+            (op "*")
+            (int 5)
+        )
+        (op "%")
+        (int 7)
+    )
+)
+\end{minted}
+\end{block}
 \end{frame}
 
 \end{spacing}
