@@ -70,7 +70,7 @@
 
 \begin{spacing}{1.3}
 
-\begin{frame}[fragile=singleslide]{The Parser Type}
+\begin{frame}[fragile=singleslide]{The Type Parser}
 
 \begin{minted}[fontsize=\codesize]{haskell}
 newtype Parser a = Parser { parse :: String -> [(a,String)] }
@@ -220,6 +220,32 @@ ghci> fst . head $ apply addExpr "10 / 3 - 4 * 5 % 7"
 )
 \end{minted}
 \end{block}
+\end{frame}
+
+\begin{frame}[fragile=singleslide]{The Type Interp}
+\begin{minted}[fontsize=\codesize]{haskell}
+newtype Env = Env (Map.Map Ident Int, Map.Map Ident Func)
+
+env0 = [] :: [Env]
+env1 = Env (Map.empty,Map.empty) :: Env
+
+exti :: Ident -> Int -> Interp Int
+extf :: Ident -> Func -> Interp Int
+
+vali :: Ident -> Interp Int
+
+newtype Interp a = Interp {
+    interp :: [Env] -> String -> Either (a,[Env],String) (Int,[Env],String) }
+
+instance Monad Interp where
+    return a = Interp ( \es0 cs0 -> Left (a,es0,cs0) )
+    i >>= h = Interp ( \es0 cs0 -> case interp i es0 cs0 of
+                                       Left  (a,es,cs) -> interp (h a) es cs
+                                       Right (a,es,cs) -> Right  (a,es,cs) )
+                                       
+return_ :: Int -> Interp a
+return_ a = Interp ( \es cs -> Right (a,es,cs) )
+\end{minted}
 \end{frame}
 
 \end{spacing}

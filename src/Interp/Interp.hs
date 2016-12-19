@@ -25,8 +25,8 @@ instance Monad Interp where
                                        Right (a,es,cs) -> Right  (a,es,cs)
                      )
 
-data Var = Vari { vari :: Int }
-         | Varf { varf :: Func }
+--data Var = Vari { vari :: Int }
+ --        | Varf { varf :: Func }
 
 data Func = Funci { funci :: Interp Int }
           | Funcf { funcf :: Int -> Interp Func }
