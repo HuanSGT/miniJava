@@ -321,6 +321,23 @@ invoke xs id = closure . apply xs . valf $ id
 \end{minted}
 \end{frame}
 
+\begin{frame}[fragile=singleslide]{Interpreting Functions}
+\begin{minted}[fontsize=\codesize]{haskell}
+func :: Maybe Paras -> Block -> Func
+func aa b =
+    case aa of
+         Nothing -> Funci $ block b
+         Just (APara (Para _ id)) -> Funcf $ \x -> (exti id x) >> h
+             where h = return $ func Nothing b
+         Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
+             where h = return $ func (Just p) b
+
+eval :: Program -> Interp Int
+eval (Program [ClassDecl a b c d es f] EOF) = closure h
+    where h = methods es >> invoke [] (Ident "main")
+              where methods ...
+\end{minted}
+\end{frame}
 
 \end{spacing}
 \end{document}

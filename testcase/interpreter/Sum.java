@@ -8,6 +8,5 @@ class Sum {
             i = i + 1;
         }
         System.out.println(sum);
-        System.out.println((3 + 2) * 5 % (6 - 3 + 1));
     }
 }

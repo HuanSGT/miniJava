@@ -79,9 +79,6 @@ updi k v = Interp h
                    Nothing -> case h es cs of
                                    Left (a,es,cs) -> Left (a,env:es,cs)
 
---invoke :: Ident -> (Interp Func -> Interp Int) -> Interp Int
---invoke id apply' = closure . apply' . valf $ id
-
 invoke :: [Int] -> Ident -> Interp Int
 invoke xs id = closure . apply xs . valf $ id
 
@@ -91,12 +88,3 @@ apply xs f =  h f xs
           h f (x:xs) = do
               f' <- f
               h (funcf f' x) xs
-
-{--
-invoke id apply = Interp h
-    where h es0@(env@(Env (e,f)):es) cs =
-              case Map.lookup id f of
-                   Just a  -> interp (closure . apply $ a) es0 cs
-                   Nothing -> case h es cs of
-                                   Left (a,es,cs) -> Left (a,env:es,cs)
-                                   --}
