@@ -310,9 +310,9 @@ env0 = [] :: [Env]
 env1 = Env (Map.empty,Map.empty) :: Env
 
 closure :: Interp Int -> Interp Int
-closure i = Interp (\es0 cs0 -> case interp i (env1:es0) cs0 of
-                                   Right (a,e:es,cs) -> Left (a,es,cs)
-                                   Left  (a,e:es,cs) -> Left (a,es,cs) )
+closure i = Interp ( \(e0:es0) cs0 -> case interp i (env1:es0) cs0 of
+                                   Right (a,e:es,cs) -> Left (a,e0:es,cs)
+                                   Left  (a,e:es,cs) -> Left (a,e0:es,cs) )
                   
 valf :: Ident -> Interp Func
 
@@ -323,7 +323,6 @@ invoke xs id = closure . apply xs . valf $ id
 \end{minted}
 \end{frame}
 
-\iffalse
 \begin{frame}[fragile=singleslide]{Interpreting Functions}
 \begin{minted}[fontsize=\codesize]{haskell}
 func :: Maybe Paras -> Block -> Func
@@ -335,13 +334,15 @@ func aa b =
          Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
              where h = return $ func (Just p) b
 
+pushe :: Interp Int
+pushe = Interp ( \es cs -> Left (0, env1:es, cs) )
+
 eval :: Program -> Interp Int
-eval (Program [ClassDecl a b c d es f] EOF) = closure h
-    where h = methods es >> invoke [] (Ident "main")
+eval (Program [ClassDecl a b c d es f] EOF) = h
+    where h = pushe >> methods es >> pushe >> invoke [] (Ident "main")
               where methods ...
 \end{minted}
 \end{frame}
-\fi
 
 \end{spacing}
 \end{document}
