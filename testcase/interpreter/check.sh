@@ -28,4 +28,7 @@ java Prime >> ans.txt
 java Power >> ans.txt
 java Sum >> ans.txt
 
+rm *.class
+
 icdiff ans.txt out.txt
+diff ans.txt out.txt

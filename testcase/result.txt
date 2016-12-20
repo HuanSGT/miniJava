@@ -9429,6 +9429,602 @@
     )
     (EOF)
 )
+(Program
+    (ClassDecl
+        (key class)
+        (id "Power")
+        (op "{")
+        (MainMethod
+            (key public)
+            (key static)
+            (type void)
+            (key main)
+            (op "(")
+            (key String)
+            (op "[")
+            (op "]")
+            (id "a")
+            (op ")")
+            (Block
+                (op "{")
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 2)
+                                (op ",")
+                                (ExprList
+                                    (int 10)
+                                    (op ",")
+                                    (int 10000)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 2)
+                                (op ",")
+                                (ExprList
+                                    (int 1000000)
+                                    (op ",")
+                                    (int 131)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 10)
+                                (op ",")
+                                (ExprList
+                                    (int 1000000)
+                                    (op ",")
+                                    (int 9)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 1341)
+                                (op ",")
+                                (ExprList
+                                    (int 9023)
+                                    (op ",")
+                                    (int 31)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 5)
+                                (op ",")
+                                (ExprList
+                                    (int 0)
+                                    (op ",")
+                                    (int 100)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "pow")
+                        (Calling
+                            (op "(")
+                            (ExprList
+                                (int 123)
+                                (op ",")
+                                (ExprList
+                                    (int 987)
+                                    (op ",")
+                                    (int 3)
+                                )
+                            )
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (op "}")
+            )
+        )
+        (Method
+            (key public)
+            (key static)
+            (type int)
+            (id "pow")
+            (op "(")
+            (Paras 
+                (Para (type int) (id "a"))
+                (op ",")
+                (Paras 
+                    (Para (type int) (id "x"))
+                    (op ",")
+                    (Para (type int) (id "p"))
+                )
+            )
+            (op ")")
+            (Block
+                (op "{")
+                (VarDecl
+                    (type int)
+                    (id "ret")
+                    (VarClause
+                        (op "=")
+                        (int 1)
+                    )
+                    (op ";")
+                )
+                (WhileStatement
+                    (key while)
+                    (op "(")
+                    (RelationExpr
+                        (id "x")
+                        (op ">")
+                        (int 0)
+                    )
+                    (op ")")
+                    (Block
+                        (op "{")
+                        (IfStatement
+                            (key if)
+                            (op "(")
+                            (EqExpr
+                                (MulExpr
+                                    (id "x")
+                                    (op "%")
+                                    (int 2)
+                                )
+                                (op "==")
+                                (int 1)
+                            )
+                            (op ")")
+                            (ExprStatement
+                                (Expr
+                                    (id "ret")
+                                    (op "=")
+                                    (MulExpr
+                                        (MulExpr
+                                            (id "ret")
+                                            (op "*")
+                                            (id "a")
+                                        )
+                                        (op "%")
+                                        (id "p")
+                                    )
+                                )
+                                (op ";")
+                            )
+                        )
+                        (ExprStatement
+                            (Expr
+                                (id "a")
+                                (op "=")
+                                (MulExpr
+                                    (MulExpr
+                                        (id "a")
+                                        (op "*")
+                                        (id "a")
+                                    )
+                                    (op "%")
+                                    (id "p")
+                                )
+                            )
+                            (op ";")
+                        )
+                        (ExprStatement
+                            (Expr
+                                (id "x")
+                                (op "=")
+                                (MulExpr
+                                    (id "x")
+                                    (op "/")
+                                    (int 2)
+                                )
+                            )
+                            (op ";")
+                        )
+                        (op "}")
+                    )
+                )
+                (ReturnStatement
+                    (key return)
+                    (id "ret")
+                    (op ";")
+                )
+                (op "}")
+            )
+        )
+        (op "}")
+    )
+    (EOF)
+)
+(Program
+    (ClassDecl
+        (key class)
+        (id "Sum")
+        (op "{")
+        (MainMethod
+            (key public)
+            (key static)
+            (type void)
+            (key main)
+            (op "(")
+            (key String)
+            (op "[")
+            (op "]")
+            (id "args")
+            (op ")")
+            (Block
+                (op "{")
+                (VarDecl
+                    (type int)
+                    (id "i")
+                    (VarClause
+                        (op "=")
+                        (int 1)
+                    )
+                    (op ";")
+                )
+                (VarDecl
+                    (type int)
+                    (id "sum")
+                    (VarClause
+                        (op "=")
+                        (int 0)
+                    )
+                    (op ";")
+                )
+                (WhileStatement
+                    (key while)
+                    (op "(")
+                    (RelationExpr
+                        (id "i")
+                        (op "<=")
+                        (int 100000)
+                    )
+                    (op ")")
+                    (Block
+                        (op "{")
+                        (IfStatement
+                            (key if)
+                            (op "(")
+                            (OrExpr
+                                (EqExpr
+                                    (MulExpr
+                                        (id "i")
+                                        (op "%")
+                                        (int 3)
+                                    )
+                                    (op "==")
+                                    (int 0)
+                                )
+                                (op "||")
+                                (EqExpr
+                                    (MulExpr
+                                        (id "i")
+                                        (op "%")
+                                        (int 5)
+                                    )
+                                    (op "==")
+                                    (int 1)
+                                )
+                            )
+                            (op ")")
+                            (ExprStatement
+                                (Expr
+                                    (id "sum")
+                                    (op "=")
+                                    (AddExpr
+                                        (id "sum")
+                                        (op "-")
+                                        (id "i")
+                                    )
+                                )
+                                (op ";")
+                            )
+                            (ElseClause
+                                (key else)
+                                (ExprStatement
+                                    (Expr
+                                        (id "sum")
+                                        (op "=")
+                                        (AddExpr
+                                            (id "sum")
+                                            (op "+")
+                                            (id "i")
+                                        )
+                                    )
+                                    (op ";")
+                                )
+                            )
+                        )
+                        (ExprStatement
+                            (Expr
+                                (id "i")
+                                (op "=")
+                                (AddExpr
+                                    (id "i")
+                                    (op "+")
+                                    (int 1)
+                                )
+                            )
+                            (op ";")
+                        )
+                        (op "}")
+                    )
+                )
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (id "sum")
+                    (op ")")
+                    (op ";")
+                )
+                (op "}")
+            )
+        )
+        (op "}")
+    )
+    (EOF)
+)
+(Program
+    (ClassDecl
+        (key class)
+        (id "Deep")
+        (op "{")
+        (Field
+            (key public)
+            (key static)
+            (type int)
+            (id "j")
+            (op ";")
+        )
+        (Method
+            (key public)
+            (key static)
+            (type int)
+            (id "sum")
+            (op "(")
+            (Para (type int) (id "i"))
+            (op ")")
+            (Block
+                (op "{")
+                (IfStatement
+                    (key if)
+                    (op "(")
+                    (EqExpr
+                        (id "i")
+                        (op "==")
+                        (int 0)
+                    )
+                    (op ")")
+                    (ReturnStatement
+                        (key return)
+                        (int 0)
+                        (op ";")
+                    )
+                )
+                (IfStatement
+                    (key if)
+                    (op "(")
+                    (EqExpr
+                        (MulExpr
+                            (id "i")
+                            (op "%")
+                            (int 3)
+                        )
+                        (op "==")
+                        (int 0)
+                    )
+                    (op ")")
+                    (Block
+                        (op "{")
+                        (ExprStatement
+                            (Expr
+                                (id "j")
+                                (op "=")
+                                (AddExpr
+                                    (id "j")
+                                    (op "+")
+                                    (int 1)
+                                )
+                            )
+                            (op ";")
+                        )
+                        (ReturnStatement
+                            (key return)
+                            (AddExpr
+                                (AddExpr
+                                    (Call
+                                        (id "sum")
+                                        (Calling
+                                            (op "(")
+                                            (AddExpr
+                                                (id "i")
+                                                (op "-")
+                                                (int 1)
+                                            )
+                                            (op ")")
+                                        )
+                                    )
+                                    (op "-")
+                                    (id "i")
+                                )
+                                (op "-")
+                                (id "j")
+                            )
+                            (op ";")
+                        )
+                        (op "}")
+                    )
+                    (ElseClause
+                        (key else)
+                        (Block
+                            (op "{")
+                            (ExprStatement
+                                (Expr
+                                    (id "j")
+                                    (op "=")
+                                    (AddExpr
+                                        (id "j")
+                                        (op "-")
+                                        (int 1)
+                                    )
+                                )
+                                (op ";")
+                            )
+                            (ReturnStatement
+                                (key return)
+                                (AddExpr
+                                    (AddExpr
+                                        (Call
+                                            (id "sum")
+                                            (Calling
+                                                (op "(")
+                                                (AddExpr
+                                                    (id "i")
+                                                    (op "-")
+                                                    (int 1)
+                                                )
+                                                (op ")")
+                                            )
+                                        )
+                                        (op "+")
+                                        (id "i")
+                                    )
+                                    (op "+")
+                                    (id "j")
+                                )
+                                (op ";")
+                            )
+                            (op "}")
+                        )
+                    )
+                )
+                (op "}")
+            )
+        )
+        (MainMethod
+            (key public)
+            (key static)
+            (type void)
+            (key main)
+            (op "(")
+            (key String)
+            (op "[")
+            (op "]")
+            (id "args")
+            (op ")")
+            (Block
+                (op "{")
+                (PrintStatement
+                    (key System)
+                    (op ".")
+                    (key out)
+                    (op ".")
+                    (key println)
+                    (op "(")
+                    (Call
+                        (id "sum")
+                        (Calling
+                            (op "(")
+                            (int 500000)
+                            (op ")")
+                        )
+                    )
+                    (op ")")
+                    (op ";")
+                )
+                (op "}")
+            )
+        )
+        (op "}")
+    )
+    (EOF)
+)
 2
 3
 5
@@ -9537,3 +10133,11 @@
 89
 97
 25
+1024
+84
+1
+16
+1
+0
+333456668
+13888861110

@@ -93,7 +93,7 @@
 		\item Can be compiled by a regular Java compiler
 		\item Basic features
 			\begin{itemize}
-				\item Variables assignment
+				\item Variables declaration/assignment
 				\item Arithmetic/Boolean operation
 				\item If, while, recursion, functions invoking each other
 				%\item Object-oriented feature not included
@@ -183,7 +183,7 @@ apply p = parse (white >> p)
 
 -- ( (a op a) op a ) op a
 lass :: Parser a -> Parser op -> (a -> b) -> (b -> op -> a -> b) -> Parser b
-lass a op single cons = a >>= rest . single
+lass           a           op     single     cons      = a >>= rest . single
     where rest x = ( do
                    y <- op
                    z <- a
@@ -191,7 +191,7 @@ lass a op single cons = a >>= rest . single
 
 -- a op ( a op (a op a) )
 rass :: Parser a -> Parser op -> (a -> b) -> (a -> op -> b -> b) -> Parser b
-rass a op single cons = a >>= rest
+rass           a           op     single     cons      = a >>= rest
     where rest x = ( do
                    y <- op
                    z <- a
@@ -200,7 +200,7 @@ rass a op single cons = a >>= rest
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Operators and Ints}
+\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Operators}
 \begin{minted}[fontsize=\codesize]{haskell}
 data AddOp    = Plus | Minus
 
@@ -217,7 +217,7 @@ mulOp    = times +++ slash +++ modulo
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Nodes in AST}
+\begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - Expressions}
 \begin{minted}[fontsize=\codesize]{haskell}
 data AddExpr   = AMul MulExpr
                | AddExpr AddExpr AddOp MulExpr
@@ -322,7 +322,7 @@ invoke xs id = closure . apply xs . valf $ id
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile=singleslide]{Interpreting Functions}
+\begin{frame}[fragile=singleslide]{Interpreting the Whole Program}
 \begin{minted}[fontsize=\codesize]{haskell}
 env1 = Env (Map.empty,Map.empty) :: Env
 
