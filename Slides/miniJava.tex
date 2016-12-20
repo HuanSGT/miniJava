@@ -306,7 +306,6 @@ mulExpr (MulExpr a b c) = do
 data Func = Funci { funci :: Interp Int }
           | Funcf { funcf :: Int -> Interp Func }
 
-env0 = [] :: [Env]
 env1 = Env (Map.empty,Map.empty) :: Env
 
 closure :: Interp Int -> Interp Int
@@ -333,6 +332,8 @@ func aa b =
              where h = return $ func Nothing b
          Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
              where h = return $ func (Just p) b
+
+env1 = Env (Map.empty,Map.empty) :: Env
 
 pushe :: Interp Int
 pushe = Interp ( \es cs -> Left (0, env1:es, cs) )

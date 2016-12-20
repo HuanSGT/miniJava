@@ -8,6 +8,8 @@
          \PYGdefault{k+kt}{Just} \PYGdefault{p}{(}\PYGdefault{k+kt}{Paras} \PYGdefault{p}{(}\PYGdefault{k+kt}{Para} \PYGdefault{k+kr}{\PYGdefaultZus{}} \PYGdefault{n}{id}\PYGdefault{p}{)} \PYGdefault{k+kr}{\PYGdefaultZus{}} \PYGdefault{n}{p}\PYGdefault{p}{)} \PYGdefault{o+ow}{\PYGdefaultZhy{}\PYGdefaultZgt{}} \PYGdefault{k+kt}{Funcf} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n+nf}{\PYGdefaultZbs{}}\PYGdefault{n}{x} \PYGdefault{o+ow}{\PYGdefaultZhy{}\PYGdefaultZgt{}} \PYGdefault{p}{(}\PYGdefault{n}{exti} \PYGdefault{n}{id} \PYGdefault{n}{x}\PYGdefault{p}{)} \PYGdefault{o}{\PYGdefaultZgt{}\PYGdefaultZgt{}} \PYGdefault{n}{h}
              \PYGdefault{k+kr}{where} \PYGdefault{n}{h} \PYGdefault{o+ow}{=} \PYGdefault{n}{return} \PYGdefault{o}{\PYGdefaultZdl{}} \PYGdefault{n}{func} \PYGdefault{p}{(}\PYGdefault{k+kt}{Just} \PYGdefault{n}{p}\PYGdefault{p}{)} \PYGdefault{n}{b}
 
+\PYGdefault{n+nf}{env1} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Env} \PYGdefault{p}{(}\PYGdefault{k+kt}{Map}\PYGdefault{o}{.}\PYGdefault{n}{empty}\PYGdefault{p}{,}\PYGdefault{k+kt}{Map}\PYGdefault{o}{.}\PYGdefault{n}{empty}\PYGdefault{p}{)} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Env}
+
 \PYGdefault{n+nf}{pushe} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Interp} \PYGdefault{k+kt}{Int}
 \PYGdefault{n+nf}{pushe} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Interp} \PYGdefault{p}{(} \PYGdefault{n+nf}{\PYGdefaultZbs{}}\PYGdefault{n}{es} \PYGdefault{n}{cs} \PYGdefault{o+ow}{\PYGdefaultZhy{}\PYGdefaultZgt{}} \PYGdefault{k+kt}{Left} \PYGdefault{p}{(}\PYGdefault{l+m+mi}{0}\PYGdefault{p}{,} \PYGdefault{n}{env1}\PYGdefault{k+kt}{:}\PYGdefault{n}{es}\PYGdefault{p}{,} \PYGdefault{n}{cs}\PYGdefault{p}{)} \PYGdefault{p}{)}
 

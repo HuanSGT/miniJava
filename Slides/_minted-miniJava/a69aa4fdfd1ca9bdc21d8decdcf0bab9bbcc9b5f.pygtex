@@ -2,7 +2,6 @@
 \PYGdefault{k+kr}{data} \PYGdefault{k+kt}{Func} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Funci} \PYGdefault{p}{\PYGdefaultZob{}} \PYGdefault{n}{funci} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Interp} \PYGdefault{k+kt}{Int} \PYGdefault{p}{\PYGdefaultZcb{}}
           \PYGdefault{o}{|} \PYGdefault{k+kt}{Funcf} \PYGdefault{p}{\PYGdefaultZob{}} \PYGdefault{n}{funcf} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Int} \PYGdefault{o+ow}{\PYGdefaultZhy{}\PYGdefaultZgt{}} \PYGdefault{k+kt}{Interp} \PYGdefault{k+kt}{Func} \PYGdefault{p}{\PYGdefaultZcb{}}
 
-\PYGdefault{n+nf}{env0} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{[]} \PYGdefault{o+ow}{::} \PYGdefault{p}{[}\PYGdefault{k+kt}{Env}\PYGdefault{p}{]}
 \PYGdefault{n+nf}{env1} \PYGdefault{o+ow}{=} \PYGdefault{k+kt}{Env} \PYGdefault{p}{(}\PYGdefault{k+kt}{Map}\PYGdefault{o}{.}\PYGdefault{n}{empty}\PYGdefault{p}{,}\PYGdefault{k+kt}{Map}\PYGdefault{o}{.}\PYGdefault{n}{empty}\PYGdefault{p}{)} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Env}
 
 \PYGdefault{n+nf}{closure} \PYGdefault{o+ow}{::} \PYGdefault{k+kt}{Interp} \PYGdefault{k+kt}{Int} \PYGdefault{o+ow}{\PYGdefaultZhy{}\PYGdefaultZgt{}} \PYGdefault{k+kt}{Interp} \PYGdefault{k+kt}{Int}
