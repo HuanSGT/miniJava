@@ -94,7 +94,7 @@
 		\item Basic features
 			\begin{itemize}
 				\item Variables assignment
-				\item arithmetic operation
+				\item Arithmetic/Boolean operation
 				\item If, while, recursion, functions invoking each other
 				%\item Object-oriented feature not included
 			\end{itemize}
@@ -214,10 +214,6 @@ times    = token $ string "*"  >> return Times
 slash    = token $ string "/"  >> return Slash
 modulo   = token $ string "%"  >> return Modulo
 mulOp    = times +++ slash +++ modulo
-
-data BasicExpr = Bool Bool | Int Int | Nul | ...
-
-int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
 \end{minted}
 \end{frame}
 
@@ -234,6 +230,10 @@ data MulExpr   = AUnary UnaryExpr
 mulExpr = lass unaryExpr mulOp AUnary MulExpr
 \end{minted}
 \end{frame}
+
+%data BasicExpr = Bool Bool | Int Int | Nul | ...
+
+%int = token $ plusSign (sat Char.isDigit) >>= return . Int . read
 
 \begin{frame}[fragile=singleslide]{Parsing Arithmetic Expressions - An Example}
 \begin{block}{Terminal}
@@ -324,15 +324,6 @@ invoke xs id = closure . apply xs . valf $ id
 
 \begin{frame}[fragile=singleslide]{Interpreting Functions}
 \begin{minted}[fontsize=\codesize]{haskell}
-func :: Maybe Paras -> Block -> Func
-func aa b =
-    case aa of
-         Nothing -> Funci $ block b
-         Just (APara (Para _ id)) -> Funcf $ \x -> (exti id x) >> h
-             where h = return $ func Nothing b
-         Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
-             where h = return $ func (Just p) b
-
 env1 = Env (Map.empty,Map.empty) :: Env
 
 pushe :: Interp Int
@@ -342,8 +333,21 @@ eval :: Program -> Interp Int
 eval (Program [ClassDecl a b c d es f] EOF) = h
     where h = pushe >> methods es >> pushe >> invoke [] (Ident "main")
               where methods ...
+
+execute :: Program -> String
+execute p = case interp (eval p) [] "" of
+                 Left  (a,_,cs) -> cs
 \end{minted}
 \end{frame}
 
 \end{spacing}
 \end{document}
+
+func :: Maybe Paras -> Block -> Func
+func aa b =
+    case aa of
+         Nothing -> Funci $ block b
+         Just (APara (Para _ id)) -> Funcf $ \x -> (exti id x) >> h
+             where h = return $ func Nothing b
+         Just (Paras (Para _ id) _ p) -> Funcf $ \x -> (exti id x) >> h
+             where h = return $ func (Just p) b
